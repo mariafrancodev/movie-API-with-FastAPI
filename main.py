@@ -1,10 +1,11 @@
+import uvicorn
+import os
 from fastapi import FastAPI
 from config.database import engine, Base
 from middlewares.error_handler import ErrorHandler
 from routers.movie import movie_router
 from routers.login import login_router
 from routers.home import home_router
-
 
 app = FastAPI()
 app.title = "My app with FastAPI"
@@ -17,3 +18,6 @@ app.include_router(home_router)
 
 
 Base.metadata.create_all(bind=engine)
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
